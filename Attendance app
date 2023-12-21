@@ -1,1 +1,30 @@
-print("hello")
+import tkinter as tk
+from datetime import datetime
+
+class AttendanceApp:
+    def __init__(self, master):
+        self.master = master
+        self.master.title("Attendance System")
+        
+        self.label = tk.Label(master, text="Enter your name:")
+        self.label.pack()
+        self.entry = tk.Entry(master)
+        self.entry.pack()
+        self.button = tk.Button(master, text="Mark Attendance", command=self.mark_attendance)
+        self.button.pack()
+
+    def mark_attendance(self):
+        name = self.entry.get()
+        time_now = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+
+        with open("attendance.txt", "a") as file:
+            file.write(f"{name} - {time_now}\n")
+
+        self.entry.delete(0, tk.END)
+        print(f"Attendance marked for {name} at {time_now}")
+
+if __name__ == "__main__":
+    root = tk.Tk()
+    app = AttendanceApp(root)
+    root.mainloop()
+
